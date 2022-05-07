@@ -19,10 +19,9 @@ export default function Modal({
   return (
     <PortalWithState
       node={document.querySelector("body")}
-      closeOnOutsideClick
       closeOnEsc
     >
-      {({ openPortal, closePortal, isOpen, portal }) => (
+      {({ openPortal, closePortal, portal }) => (
         <>
           {trigger ? (
             React.cloneElement(trigger as React.ReactElement, {
@@ -38,6 +37,12 @@ export default function Modal({
               role="dialog"
               aria-modal={true}
               className="fixed inset-0 backdrop-blur flex justify-center"
+              id="modal-container"
+              onClick={(e) =>
+                (e.target as Element).id === "modal-container"
+                  ? closePortal()
+                  : () => {}
+              }
             >
               <div className="flex flex-col justify-between mt-12 p-4 bg-white rounded-xl shadow-xl border w-full max-w-2xl min-h-[200px] max-h-[500px] overflow-y-auto">
                 <div className="h-full">{children}</div>
